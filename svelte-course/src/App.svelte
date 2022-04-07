@@ -1,35 +1,35 @@
 <script>
-	let name = "svelte";
-	let pos = {
-		x: 0,
-		y: 0,
-	};
-	let inputValue = ""
+	let name = "Svelte";
+	let counter = 0;
+	$: counterClass = counter % 2 === 0 ? "red" : "blue";
 
-	function changeNameHandler() {
-		name = "Changed Name";
+	$: upperName = name.toUpperCase();
+	$: lowerName = name.toLowerCase();
+
+	$: {
+		console.log("Name", name);
+		console.log("Counter", counter);
 	}
-	function mouseMoveHandler(event) {
-		pos.x = event.x;
-		pos.y = event.y;
+
+	$: if (counter === 10) {
+		name = "Counter is equal 10";
+	} else {
+		name = 'Svelte';
 	}
-	function submitHandler(event) {
-		console.log('input value:', inputValue);
+
+	function changeName() {
+		name = "New name";
 	}
 </script>
 
 <main>
 	<h1>{name}</h1>
-	<button on:click={changeNameHandler}>Change name</button>
+	<h2>{upperName}</h2>
+	<h2>{lowerName}</h2>
 
-	<div class="playground" on:mousemove={mouseMoveHandler}>
-		<h2>X: {pos.x}, Y: {pos.y}</h2>
-	</div>
-
-	<form on:submit|preventDefault={submitHandler}>
-		<input type="text" on:input={event => (inputValue = event.target.value)}>
-		<button type="submit">Submit form</button>
-	</form>
+	<button on:click={changeName}>Submit form</button>
+	<h1 class={counterClass}>{counter}</h1>
+	<button on:click={() => counter++}>Add 1 to counter</button>
 </main>
 
 <style>
@@ -42,7 +42,6 @@
 
 	h1 {
 		color: #ff3e00;
-		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
 	}
@@ -53,6 +52,12 @@
 		padding: 1rem;
 		margin-bottom: 1rem;
 		border: 1px solid black;
+	}
+	.blue {
+		color: #3f3fdf;
+	}
+	.red {
+		color: #ff3e00;
 	}
 
 	@media (min-width: 640px) {
