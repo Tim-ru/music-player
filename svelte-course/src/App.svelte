@@ -1,32 +1,30 @@
 <script>
-	let name = "Svelte";
-	let agree = true;
-	let text = "";
-	let select = "2";
-	let sex = "male";
+	let value = "Hello";
+	$: error = isValid(value);
+	function isValid(val) {
+		return val.length > 5 && val.length < 10;
+	}
 </script>
 
 <main>
-	<h1>{name}</h1>
-	<input type="text" bind:value={name} />
-	<hr />
-	<input type="checkbox" bind:checked={agree} />
-	{agree}
-	<hr />
-	<textarea bind:value={text} />
-	<div style="white-space: pre-wrap;">{text}</div>
-	<hr />
-	<select bind:value={select}>
-		<option value="0">option 0</option>
-		<option value="1">option 1</option>
-		<option value="2">option 2</option>
-	</select>
-	<hr />
-	<input type="radio" value="female" bind:group={sex} />Female
-	<input type="radio" value="male" bind:group={sex} />Male
-	<br />
-	Sex: {sex}
+	<h1>Application {value}</h1>
+	<input type="text" bind:value class:red={error} class:green={!error} />
 </main>
 
+{#if value.length < 5}
+	<p>text 1</p>
+{:else if value.length > 10}
+	<p>text 2</p>
+{/if}
+
 <style>
+	input {
+		outline: none;
+	}
+	.red {
+		border: red 1px solid;
+	}
+	.green {
+		border: green 1px solid;
+	}
 </style>
