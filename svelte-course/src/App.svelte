@@ -1,68 +1,32 @@
 <script>
 	let name = "Svelte";
-	let counter = 0;
-	$: counterClass = counter % 2 === 0 ? "red" : "blue";
-
-	$: upperName = name.toUpperCase();
-	$: lowerName = name.toLowerCase();
-
-	$: {
-		console.log("Name", name);
-		console.log("Counter", counter);
-	}
-
-	$: if (counter === 10) {
-		name = "Counter is equal 10";
-	} else {
-		name = 'Svelte';
-	}
-
-	function changeName() {
-		name = "New name";
-	}
+	let agree = true;
+	let text = "";
+	let select = "2";
+	let sex = "male";
 </script>
 
 <main>
 	<h1>{name}</h1>
-	<h2>{upperName}</h2>
-	<h2>{lowerName}</h2>
-
-	<button on:click={changeName}>Submit form</button>
-	<h1 class={counterClass}>{counter}</h1>
-	<button on:click={() => counter++}>Add 1 to counter</button>
+	<input type="text" bind:value={name} />
+	<hr />
+	<input type="checkbox" bind:checked={agree} />
+	{agree}
+	<hr />
+	<textarea bind:value={text} />
+	<div style="white-space: pre-wrap;">{text}</div>
+	<hr />
+	<select bind:value={select}>
+		<option value="0">option 0</option>
+		<option value="1">option 1</option>
+		<option value="2">option 2</option>
+	</select>
+	<hr />
+	<input type="radio" value="female" bind:group={sex} />Female
+	<input type="radio" value="male" bind:group={sex} />Male
+	<br />
+	Sex: {sex}
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	.playground {
-		width: 400px;
-		height: 200px;
-		padding: 1rem;
-		margin-bottom: 1rem;
-		border: 1px solid black;
-	}
-	.blue {
-		color: #3f3fdf;
-	}
-	.red {
-		color: #ff3e00;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
